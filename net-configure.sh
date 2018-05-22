@@ -13,6 +13,13 @@ backup_config(){
 	cp ${NW_CONFIG_PATH}/ifcfg-* ${BACKUP_DIR}
 }
 
+#find_ifname(){
+#	OLD_IP="$1"
+#	echo "grepping ${OLD_IP} in function"
+#	grep -w "${OLD_IP}" ${NW_CONFIG_PATH}/ifcfg-*
+#
+#}
+
 reconfigure_ifaces(){
 	# Expected arguments
 	# $1: Input file
@@ -30,6 +37,10 @@ reconfigure_ifaces(){
 		NEW_IP=${configuration[1]}
 		NEW_MASK=${configuration[2]}
 		NEW_GW=${configuration[3]}
+
+		#Let's see if we can find any match with OLD_IP address
+		FOUND_COUNT=$(grep -w ${OLD_IP} ${NW_CONFIG_PATH}/ifcfg-* | wc -l)
+
 	done < ${INPUT_FILE}
 }
 
